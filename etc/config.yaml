@@ -1,0 +1,245 @@
+global:
+  loglevel: info # 日志级别，可选值：debug,info,warn,error,panic,fatal
+  http:
+    # 网关地址，用于访问API
+    listenaddr: :8080
+    # 用于HTTPS方式访问API的端口配置
+    listenaddrtls: ""
+    certfile: ""
+    keyfile: ""
+    # 是否自动添加cors头
+    cors: true
+    # 用户名和密码，用于API访问时的基本身份认证
+    username: ""
+    password: ""
+  publish:
+    # 是否发布音频流
+    pubaudio: true
+    # 是否发布视频流
+    pubvideo: true
+    # 剔出已经存在的发布者，用于顶替原有发布者
+    kickexist: false
+    # 发布流默认过期时间单位秒，超过该时间发布者没有恢复流将被删除
+    publishtimeout: 10
+    # 自动关闭触发后延迟的秒数(期间内如果有新的订阅则取消触发关闭)，0为关闭该功能，保持连接。
+    delayclosetimeout: 0
+    # 发布者断开后等待时间，超过该时间发布者没有恢复流将被删除，0为关闭该功能，由订阅者决定是否删除
+    waitclosetimeout: 0
+  subscribe:
+    # 是否订阅音频流
+    subaudio: true
+    # 是否订阅视频流
+    subvideo: true
+    # 只订阅关键帧
+    iframeonly: false
+    # 等待发布者的秒数，用于订阅尚未发布的流
+    waittimeout: 10
+  # 启用RTP包乱序重排
+  rtpreorder : false
+  # 启用AVCC格式缓存，用于rtmp协议
+  enableavcc : true
+  # 启用rtp格式缓存，用于rtsp、websocket、gb28181协议
+  enablertp : true
+  # rtp乱序重排缓存长度
+  rtpreroderbufferlen: 50
+  console:
+    # 连接远程控制台的地址
+    server : wss://console.monibuca.com/ws/v1
+    # 远程控制台的秘钥
+    secret: ""
+    # 实例公网地址，提供远程控制台访问的地址，不配置的话使用自动识别的地址
+    publicaddr: ""
+    # 实例公网地址，提供远程控制台访问的地址，不配置的话使用自动识别的地址（https）
+    publicaddrtls: ""
+
+rtmp:
+  publish:
+    pubaudio: true
+    pubvideo: true
+    kickexist: false
+    publishtimeout: 10
+    waitclosetimeout: 0
+  subscribe:
+    subaudio: true
+    subvideo: true
+    iframeonly: false
+    waittimeout: 10
+  tcp:
+    listenaddr: :11935
+    listennum: 0
+  pull:
+    repull: 0 # 当断开后是否自动重新拉流，0代表不进行重新拉流，-1代表无限次重新拉流
+    pullonstart: false # 是否在m7s启动的时候自动拉流
+    pullonsubscribe: false  # 是否在有人订阅的时候自动拉流（按需拉流）
+    pulllist: {} # 拉流列表，以 streamPath为key，远程地址为value
+  push:
+    repush: 0 # 当断开后是否自动重新推流，0代表不进行重新推流，-1代表无限次重新推流
+    pushlist: {} # 推流列表，以 streamPath为key，远程地址为value
+  chunksize: 4096
+  keepalive: false #保持rtmp连接，默认随着stream的close而主动断开
+
+rtsp:
+  publish:
+    pubaudio: true
+    pubvideo: true
+    kickexist: false
+    publishtimeout: 10
+    waitclosetimeout: 0
+  subscribe:
+    subaudio: true
+    subvideo: true
+    iframeonly: false
+    waittimeout: 10
+  pull:
+    repull: 0
+    pullonstart: false
+    pullonsubscribe: false
+    pulllist: {}
+  push:
+    repush: 0
+    pushlist: {}
+  listenaddr: :554
+  udpaddr: :8000
+  rtcpaddr: :8001
+  readbuffersize: 2048
+  pullprotocol: 'auto'
+
+hdl:
+  http:
+    listenaddr: :8080
+    listenaddrtls: ""
+    certfile: ""
+    keyfile: ""
+    cors: true
+    username: ""
+    password: ""
+  publish:
+    pubaudio: true
+    pubvideo: true
+    kickexist: false
+    publishtimeout: 10
+    waitclosetimeout: 0
+  subscribe:
+    subaudio: true
+    subvideo: true
+    iframeonly: false
+    waittimeout: 10
+  pull:
+    repull: 0
+    pullonstart: false
+    pullonsubscribe: false
+    pulllist: {}
+
+hls:
+  publish:
+    pubaudio: true
+    pubvideo: true
+    kickexist: false
+    publishtimeout: 10
+    waitclosetimeout: 0
+  pull:
+    repull: 0
+    pullonstart: false
+    pullonsubscribe: false
+    pulllist: {}
+  subscribe:
+    subaudio: true
+    subvideo: true
+    iframeonly: false
+    waittimeout: 10
+  fragment: 10 # TS分片长度，单位秒
+  window: 2 # 实时流m3u8文件包含的TS文件数
+  filter: "" # 正则表达式，用来过滤发布的流，只有匹配到的流才会写入
+
+gb28181:
+  autoinvite:     true
+  prefetchrecord: false
+  udpcachesize:   0
+  sipnetwork:     udp
+  sipip:          ""
+  sipport:        5060
+  serial:         "34020000002000000001"
+  realm:          "3402000000"
+  username:       ""
+  password:       ""
+
+  acktimeout:        10
+  registervalidity:  60
+  registerinterval:  60
+  heartbeatinterval: 60
+  heartbeatretry:    3
+
+  mediaip:          ""
+  mediaport:        58200
+  mediaidletimeout: 30
+  medianetwork:     udp
+  mediaportmin:     0
+  meidaportmax:     0
+
+  removebaninterval: 600
+  loglevel:         info
+
+jessica:
+  http:
+    listenaddr: :8080
+    listenaddrtls: :8081
+    certfile: monibuca.com.pem
+    keyfile: monibuca.com.key
+    cors: true
+    username: ""
+    password: ""
+  subscribe:
+    subaudio: true
+    subvideo: true
+    iframeonly: false
+    waittimeout: 10
+
+webrtc:
+  iceservers: []
+  publicip: [] # 可以是数组也可以是字符串（内部自动转成数组）
+  portmin: 0
+  portmax: 0
+  inviteportfixed: true # 设备将流发送的端口，是否固定  on 发送流到多路复用端口 如9000  off 自动从 mix_port - max_port 之间的值中  选一个可以用的端口
+  iceudpmux: 9000 # 接收设备端rtp流的多路复用端口
+  pli: 2000000000 # 2s
+
+record:
+  subscribe:
+    subaudio: true
+    subvideo: true
+    iframeonly: false
+    waittimeout: 10
+  flv:
+    ext: .flv
+    path: record/flv
+    autorecord: false
+    filter: ""
+    fragment: 0
+  mp4:
+    ext: .mp4
+    path: record/mp4
+    autorecord: false
+    filter: ""
+    fragment: 0
+  hls:
+    ext: .m3u8
+    path: record/hls
+    autorecord: false
+    filter: ""
+    fragment: 0
+  raw:
+    ext: .
+    path: record/raw
+    autorecord: false
+    filter: ""
+    fragment: 0
+
+logrotate:
+  path: ./logs # 生成日志的目录
+  size: 0 # 每个日志文件的大小，单位字节，0表示不限制
+  days: 1 # 按时间分割，单位是天，即24小时
+  formatter : 2006-01-02T15 # 日志文件名格式化，按照go layout格式化，默认按照小时
+
+snap:
+  ffmpeg: "ffmpeg"
+
